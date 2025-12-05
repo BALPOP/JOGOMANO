@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--
+    ============================================================
+    JOGADOR - Business Template
+    A bold, dynamic website template for JOGADOR business
+    Features: Hero, About, Services, Team, Contact sections
+    Design: Dark theme with electric cyan accents
+    ============================================================
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="JOGADOR - Where Champions Are Made">
+    <meta name="facebook-domain-verification" content="9jhh9kkfqchcwwohywj4rz0pepkmfy" />
+    <title>JOGADOR | Where Champions Are Made</title>
+    
+    <!-- Google Fonts - Distinctive Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /*
+        ============================================================
+        CSS VARIABLES & RESET
+        Defines the core design tokens and base styles
+        ============================================================
+        */
+        :root {
+            /* Color Palette - Electric Dark Theme */
+            --color-bg-primary: #0a0a0f;
+            --color-bg-secondary: #12121a;
+            --color-bg-tertiary: #1a1a25;
+            --color-accent: #00f0ff;
+            --color-accent-glow: rgba(0, 240, 255, 0.3);
+            --color-accent-secondary: #7b2dff;
+            --color-text-primary: #ffffff;
+            --color-text-secondary: #a0a0b0;
+            --color-text-muted: #606070;
+            --color-border: rgba(255, 255, 255, 0.08);
+            
+            /* Typography */
+            --font-display: 'Bebas Neue', sans-serif;
+            --font-body: 'Outfit', sans-serif;
+            
+            /* Spacing */
+            --section-padding: 120px;
+            --container-max: 1200px;
+            
+            /* Transitions */
+            --transition-fast: 0.2s ease;
+            --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Reset */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /*
+        ============================================================
+        UTILITY CLASSES
+        Reusable helper classes for common patterns
+        ============================================================
+        */
+        .container {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .accent-text {
+            color: var(--color-accent);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--color-accent), var(--color-accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /*
+        ============================================================
+        ANIMATIONS
+        Keyframe animations for page elements
+        ============================================================
+        */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 20px var(--color-accent-glow); }
+            50% { box-shadow: 0 0 40px var(--color-accent-glow), 0 0 60px var(--color-accent-glow); }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+
+        /*
+        ============================================================
+        NAVIGATION
+        Fixed top navigation bar with blur effect
+        ============================================================
+        */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: var(--transition-smooth);
+        }
+
+        .navbar.scrolled {
+            background: rgba(10, 10, 15, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--color-border);
+            padding: 15px 0;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            letter-spacing: 4px;
+            color: var(--color-text-primary);
+            text-decoration: none;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--color-accent);
+            transform: scaleX(0);
+            transition: var(--transition-smooth);
+        }
+
+        .logo:hover::after {
+            transform: scaleX(1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            transition: var(--transition-fast);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-accent);
+        }
+
+        .nav-cta {
+            background: transparent;
+            border: 1px solid var(--color-accent);
+            color: var(--color-accent);
+            padding: 12px 28px;
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-cta:hover {
+            background: var(--color-accent);
+            color: var(--color-bg-primary);
+            box-shadow: 0 0 30px var(--color-accent-glow);
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .mobile-toggle span {
+            width: 25px;
+            height: 2px;
+            background: var(--color-text-primary);
+            transition: var(--transition-fast);
+        }
+
+        /*
+        ============================================================
+        HERO SECTION
+        Full-screen landing section with animated background
+        ============================================================
+        */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated Background Grid */
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: 
+                linear-gradient(135deg, var(--color-bg-primary) 0%, var(--color-bg-secondary) 50%, var(--color-bg-primary) 100%);
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+        }
+
+        .hero-glow {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--color-accent-glow) 0%, transparent 70%);
+            filter: blur(80px);
+            opacity: 0.5;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            width: 100%;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--color-bg-tertiary);
+            border: 1px solid var(--color-border);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--color-accent);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(4rem, 15vw, 12rem);
+            line-height: 0.9;
+            letter-spacing: 8px;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.4s forwards;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--color-text-secondary);
+            max-width: 600px;
+            margin: 0 auto 50px;
+            font-weight: 300;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.6s forwards;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.8s forwards;
+        }
+
+        .btn-primary {
+            background: var(--color-accent);
+            color: var(--color-bg-primary);
+            border: none;
+            padding: 18px 40px;
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px var(--color-accent-glow);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-text-primary);
+            border: 1px solid var(--color-border);
+            padding: 18px 40px;
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--color-accent);
+            color: var(--color-accent);
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            color: var(--color-text-muted);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .scroll-indicator::after {
+            content: '';
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--color-accent), transparent);
+        }
+
+        /*
+        ============================================================
+        SECTION STYLES
+        Common styles for content sections
+        ============================================================
+        */
+        section {
+            padding: var(--section-padding) 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--color-accent);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+
+        .section-desc {
+            color: var(--color-text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+
+        /*
+        ============================================================
+        ABOUT SECTION
+        Company introduction with stats
+        ============================================================
+        */
+        .about {
+            background: var(--color-bg-secondary);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+            aspect-ratio: 4/3;
+            background: var(--color-bg-tertiary);
+            overflow: hidden;
+        }
+
+        .about-image::before {
+            content: 'J';
+            font-family: var(--font-display);
+            font-size: 20rem;
+            color: var(--color-accent);
+            opacity: 0.1;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .about-image-border {
+            position: absolute;
+            inset: 20px;
+            border: 1px solid var(--color-accent);
+            opacity: 0.3;
+        }
+
+        .about-content h3 {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+        }
+
+        .about-content p {
+            color: var(--color-text-secondary);
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+            padding-top: 50px;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            color: var(--color-accent);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /*
+        ============================================================
+        SERVICES SECTION
+        Service cards with hover effects
+        ============================================================
+        */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            padding: 50px 40px;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-accent), var(--color-accent-secondary));
+            transform: scaleX(0);
+            transition: var(--transition-smooth);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--color-accent);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            background: var(--color-bg-tertiary);
+            border: 1px solid var(--color-border);
+            color: var(--color-accent);
+        }
+
+        .service-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .service-card p {
+            color: var(--color-text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /*
+        ============================================================
+        TEAM SECTION
+        Team member cards
+        ============================================================
+        */
+        .team {
+            background: var(--color-bg-secondary);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .team-card {
+            text-align: center;
+            position: relative;
+        }
+
+        .team-image {
+            aspect-ratio: 1;
+            background: var(--color-bg-tertiary);
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--color-border);
+            transition: var(--transition-smooth);
+        }
+
+        .team-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, var(--color-bg-primary), transparent);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .team-card:hover .team-image {
+            border-color: var(--color-accent);
+        }
+
+        .team-card:hover .team-image::before {
+            opacity: 0.8;
+        }
+
+        .team-avatar {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 4rem;
+            color: var(--color-accent);
+            opacity: 0.3;
+        }
+
+        .team-card h4 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .team-card span {
+            color: var(--color-accent);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /*
+        ============================================================
+        CTA SECTION
+        Call-to-action banner
+        ============================================================
+        */
+        .cta {
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--color-accent-secondary) 0%, var(--color-accent) 100%);
+            opacity: 0.1;
+        }
+
+        .cta-content {
+            position: relative;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .cta h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+        }
+
+        .cta p {
+            color: var(--color-text-secondary);
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /*
+        ============================================================
+        CONTACT SECTION
+        Contact form and information
+        ============================================================
+        */
+        .contact {
+            background: var(--color-bg-secondary);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+        }
+
+        .contact-info h3 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+        }
+
+        .contact-info > p {
+            color: var(--color-text-secondary);
+            margin-bottom: 40px;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .contact-item-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-bg-tertiary);
+            border: 1px solid var(--color-border);
+            color: var(--color-accent);
+            font-size: 1.2rem;
+        }
+
+        .contact-item-text span {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .contact-item-text p {
+            color: var(--color-text-primary);
+            font-size: 1rem;
+        }
+
+        .contact-form {
+            background: var(--color-bg-tertiary);
+            padding: 50px;
+            border: 1px solid var(--color-border);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--color-text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            padding: 15px 20px;
+            color: var(--color-text-primary);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: var(--transition-fast);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-accent);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .form-submit {
+            width: 100%;
+            background: var(--color-accent);
+            color: var(--color-bg-primary);
+            border: none;
+            padding: 18px;
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .form-submit:hover {
+            box-shadow: 0 10px 40px var(--color-accent-glow);
+        }
+
+        /*
+        ============================================================
+        FOOTER
+        Site footer with social links
+        ============================================================
+        */
+        .footer {
+            padding: 60px 0 30px;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .footer-logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            letter-spacing: 3px;
+            color: var(--color-text-primary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition-fast);
+        }
+
+        .footer-links a:hover {
+            color: var(--color-accent);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--color-border);
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition-smooth);
+        }
+
+        .footer-social a:hover {
+            border-color: var(--color-accent);
+            color: var(--color-accent);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid var(--color-border);
+            color: var(--color-text-muted);
+            font-size: 0.85rem;
+        }
+
+        /*
+        ============================================================
+        RESPONSIVE STYLES
+        Breakpoints for tablet and mobile devices
+        ============================================================
+        */
+        @media (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .about-grid {
+                gap: 50px;
+            }
+
+            .contact-grid {
+                gap: 50px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --section-padding: 80px;
+            }
+
+            .nav-links,
+            .nav-cta {
+                display: none;
+            }
+
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .hero-title {
+                letter-spacing: 4px;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-image {
+                order: -1;
+            }
+
+            .about-stats {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-form {
+                padding: 30px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .about-stats {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+                max-width: 280px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!--
+    ============================================================
+    NAVIGATION
+    Fixed top navigation bar
+    ============================================================
+    -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">JOGADOR</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="nav-cta">Get Started</button>
+            <div class="mobile-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!--
+    ============================================================
+    HERO SECTION
+    Main landing area with animated background
+    ============================================================
+    -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-glow"></div>
+        
+        <div class="container hero-content">
+            <div class="hero-badge">
+                <span>Welcome to the Next Level</span>
+            </div>
+            <h1 class="hero-title">
+                <span class="gradient-text">JOGADOR</span>
+            </h1>
+            <p class="hero-subtitle">
+                Where champions are made. We push boundaries, break limits, and 
+                transform potential into extraordinary performance.
+            </p>
+            <div class="hero-buttons">
+                <a href="#contact" class="btn-primary">Start Your Journey</a>
+                <a href="#about" class="btn-secondary">Learn More</a>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+        </div>
+    </section>
+
+    <!--
+    ============================================================
+    ABOUT SECTION
+    Company introduction with statistics
+    ============================================================
+    -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-image">
+                    <div class="about-image-border"></div>
+                </div>
+                <div class="about-content">
+                    <h3>REDEFINING<br><span class="accent-text">EXCELLENCE</span></h3>
+                    <p>
+                        JOGADOR was born from a vision to create something extraordinary. 
+                        We believe in the power of dedication, the strength of innovation, 
+                        and the relentless pursuit of greatness.
+                    </p>
+                    <p>
+                        Our team of experts brings decades of combined experience across 
+                        multiple disciplines, united by a single mission: to help you 
+                        achieve what others thought impossible.
+                    </p>
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">10+</div>
+                            <div class="stat-label">Years Experience</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">Happy Clients</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">98%</div>
+                            <div class="stat-label">Success Rate</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--
+    ============================================================
+    SERVICES SECTION
+    What we offer
+    ============================================================
+    -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">What We Offer</span>
+                <h2 class="section-title">OUR <span class="accent-text">SERVICES</span></h2>
+                <p class="section-desc">
+                    Comprehensive solutions designed to elevate every aspect of your journey
+                </p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">⚡</div>
+                    <h3>STRATEGY</h3>
+                    <p>
+                        Data-driven strategies tailored to your unique goals. We analyze, 
+                        plan, and execute with precision to ensure optimal results.
+                    </p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🎯</div>
+                    <h3>PERFORMANCE</h3>
+                    <p>
+                        Peak performance optimization through cutting-edge techniques 
+                        and personalized programs designed for sustainable success.
+                    </p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🚀</div>
+                    <h3>DEVELOPMENT</h3>
+                    <p>
+                        Continuous growth and skill development programs that push 
+                        boundaries and unlock hidden potential.
+                    </p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">💎</div>
+                    <h3>CONSULTING</h3>
+                    <p>
+                        Expert guidance from industry veterans who understand 
+                        the landscape and can navigate complex challenges.
+                    </p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🔥</div>
+                    <h3>TRAINING</h3>
+                    <p>
+                        Intensive training programs that build foundations, 
+                        enhance capabilities, and prepare you for any challenge.
+                    </p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🏆</div>
+                    <h3>EXCELLENCE</h3>
+                    <p>
+                        Our commitment to excellence drives everything we do, 
+                        ensuring world-class results every single time.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--
+    ============================================================
+    TEAM SECTION
+    Meet the team
+    ============================================================
+    -->
+    <section id="team" class="team">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">The People Behind</span>
+                <h2 class="section-title">OUR <span class="accent-text">TEAM</span></h2>
+                <p class="section-desc">
+                    Meet the dedicated professionals who make the impossible possible
+                </p>
+            </div>
+            
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-image">
+                        <div class="team-avatar">A</div>
+                    </div>
+                    <h4>ALEX RIVERA</h4>
+                    <span>Founder & CEO</span>
+                </div>
+                
+                <div class="team-card">
+                    <div class="team-image">
+                        <div class="team-avatar">S</div>
+                    </div>
+                    <h4>SARAH CHEN</h4>
+                    <span>Head of Strategy</span>
+                </div>
+                
+                <div class="team-card">
+                    <div class="team-image">
+                        <div class="team-avatar">M</div>
+                    </div>
+                    <h4>MARCUS JOHNSON</h4>
+                    <span>Lead Developer</span>
+                </div>
+                
+                <div class="team-card">
+                    <div class="team-image">
+                        <div class="team-avatar">E</div>
+                    </div>
+                    <h4>ELENA KOWALSKI</h4>
+                    <span>Creative Director</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--
+    ============================================================
+    CTA SECTION
+    Call to action banner
+    ============================================================
+    -->
+    <section class="cta">
+        <div class="cta-bg"></div>
+        <div class="container cta-content">
+            <h2>READY TO <span class="accent-text">LEVEL UP</span>?</h2>
+            <p>
+                Join thousands of satisfied clients who have transformed their 
+                potential into extraordinary achievement.
+            </p>
+            <a href="#contact" class="btn-primary">Get Started Today</a>
+        </div>
+    </section>
+
+    <!--
+    ============================================================
+    CONTACT SECTION
+    Contact form and information
+    ============================================================
+    -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>LET'S <span class="accent-text">CONNECT</span></h3>
+                    <p>
+                        Ready to take the next step? We'd love to hear from you. 
+                        Reach out and let's discuss how we can help you achieve 
+                        your goals.
+                    </p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-item-icon">📍</div>
+                            <div class="contact-item-text">
+                                <span>Location</span>
+                                <p>123 Innovation Street, Tech City, TC 10001</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-item-icon">✉️</div>
+                            <div class="contact-item-text">
+                                <span>Email</span>
+                                <p>hello@jogador.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-item-icon">📱</div>
+                            <div class="contact-item-text">
+                                <span>Phone</span>
+                                <p>+1 (555) 123-4567</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <form class="contact-form" onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" placeholder="John Doe" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Your Email</label>
+                        <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" name="message" placeholder="Tell us about your project..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="form-submit">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!--
+    ============================================================
+    FOOTER
+    Site footer
+    ============================================================
+    -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">JOGADOR</div>
+                
+                <ul class="footer-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#team">Team</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                
+                <div class="footer-social">
+                    <a href="#" aria-label="Twitter">𝕏</a>
+                    <a href="#" aria-label="LinkedIn">in</a>
+                    <a href="#" aria-label="Instagram">📷</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2025 JOGADOR. All rights reserved. Built with passion.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!--
+    ============================================================
+    JAVASCRIPT
+    Interactivity and animations
+    ============================================================
+    -->
+    <script>
+        /**
+         * ============================================================
+         * JOGADOR - Main JavaScript
+         * Handles navigation scroll effects and form submission
+         * ============================================================
+         */
+
+        /**
+         * Handles navbar background change on scroll
+         * Adds 'scrolled' class when user scrolls down
+         */
+        function handleNavbarScroll() {
+            const navbar = document.querySelector('.navbar');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+        }
+
+        /**
+         * Handles smooth scroll for anchor links
+         * Provides smooth navigation to page sections
+         */
+        function handleSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        }
+
+        /**
+         * Handles form submission
+         * Displays success message (demo purposes)
+         * @param {Event} event - Form submit event
+         */
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData);
+            
+            // Log form data (replace with actual form handling)
+            console.log('Form submitted:', data);
+            
+            // Show success message
+            alert('Thank you for your message! We\'ll get back to you soon.');
+            
+            // Reset form
+            event.target.reset();
+        }
+
+        /**
+         * Intersection Observer for scroll animations
+         * Adds animation classes when elements enter viewport
+         */
+        function handleScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe service cards
+            document.querySelectorAll('.service-card').forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = `all 0.6s ease ${index * 0.1}s`;
+                observer.observe(card);
+            });
+
+            // Observe team cards
+            document.querySelectorAll('.team-card').forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = `all 0.6s ease ${index * 0.1}s`;
+                observer.observe(card);
+            });
+        }
+
+        // Initialize all functions when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            handleNavbarScroll();
+            handleSmoothScroll();
+            handleScrollAnimations();
+        });
+    </script>
+</body>
+</html>
+
